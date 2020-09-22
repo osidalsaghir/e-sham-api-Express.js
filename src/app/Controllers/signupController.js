@@ -16,7 +16,7 @@ const sqlConfig = {
 class SignupController {
 
 
-    Signup = async (req, res) => {
+    signup = async (req, res) => {
         const name = req.query.Name;
         const surname = req.query.Surname;
         const birthdate = req.query.Birthdate;
