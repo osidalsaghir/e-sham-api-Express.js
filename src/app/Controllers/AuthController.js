@@ -3,10 +3,10 @@ var sql = require("mssql");
 require('dotenv').config();
 
 const sqlConfig = {
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    server: "sql5080.site4now.net",
-    database: "DB_A67424_osidsagir",
+    user: "wwe",
+    password: "wwe",
+    server: "OS",
+    database: "E-shamDB",
     port: 1433
 }
 
@@ -30,7 +30,7 @@ class AuthController {
                 // query to the database and get the records
                 request.query(qr, function (err, recordset) {
                     if (err) {
-                        res.send(err);
+                        res.send("QUERY ERROR");
                     }
 
                     else {
