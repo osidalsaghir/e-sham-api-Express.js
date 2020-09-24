@@ -11,15 +11,22 @@ const sqlConfig = {
     port: 1433
 }
 
-class StoreController {
+class ProductsController {
 
     
     add = async (req, res) => {
-        const address = req.query.address;
-        const stroreName = req.query.stroreName;
-        const ownerName = req.query.ownerName;
-        const ownerSurname = req.query.ownerSurname;
-        const logo = req.query.logo;
+        const storeID = req.query.storeID; 
+        const publishDate = req.query.publishDate; 
+        const storeDescription = req.query.storeDescription; 
+        const description = req.query.description; 
+        const priceType = req.query.priceType; 
+        const viewPriceType = req.query.viewPriceType; 
+        const staatues = req.query.staatues; 
+        const orderCounter = req.query.orderCounter; 
+        const catID = req.query.catID; 
+        const tagID = req.query.tagID; 
+        const slugID = req.query.slugID; 
+        
         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
@@ -30,8 +37,12 @@ class StoreController {
                 // create Request object
                 var request = new sql.Request();
                 
-                const qr = 'INSERT INTO store (address, stroreName, ownerName ,ownerSurname,logo ) VALUES  (N\'' + address + '\', N\'' + stroreName + '\', N\'' + ownerName + '\', N\'' + ownerSurname + '\',N\'' + logo + '\')';
-                console.log(qr);2
+                const qr = 'INSERT INTO products (storeID , publishDate,storeDescription,description,priceType,'+
+                'viewPriceType,staatues,orderCounter,catID,tagID,slugID)'+
+                ' VALUES  (N\'' + storeID + '\' ,N\'' + publishDate + '\',N\'' + storeDescription + '\',N\'' + description + 
+                '\',N\'' + priceType + '\',N\'' + viewPriceType + '\',N\'' + staatues + '\',N\'' +
+                orderCounter + '\',N\'' + catID + '\',N\'' + tagID + '\',N\'' + slugID + '\')';
+         
                 // query to the database and get the records
                 request.query(qr, function (err) {
                     if (err) {
@@ -40,7 +51,7 @@ class StoreController {
 
                     else {
                        
-                        res.send("the store added %s successfully");
+                        res.send("the category add successfully");
                     }
                 });
             });
@@ -52,7 +63,7 @@ class StoreController {
     }
 
     delete = async (req, res) => {
-        const storeID = req.query.StoreID
+        const productID = req.query.productID
         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
@@ -63,8 +74,8 @@ class StoreController {
                 // create Request object
                 var request = new sql.Request();
                 
-                const qr = "DELETE FROM store WHERE storeID = "+ storeID;
-                console.log(qr);2
+                const qr = "DELETE FROM products WHERE productID = "+ productID;
+                
                 // query to the database and get the records
                 request.query(qr, function (err) {
                     if (err) {
@@ -84,12 +95,18 @@ class StoreController {
 
     }
     update = async (req, res) => {
-        const address = req.query.address;
-        const stroreName = req.query.stroreName;
-        const ownerName = req.query.ownerName;
-        const ownerSurname = req.query.ownerSurname;
-        const logo = req.query.logo;
-        const storeID = req.query.StoreID;
+        const storeID = req.query.storeID; 
+        const publishDate = req.query.publishDate; 
+        const storeDescription = req.query.storeDescription; 
+        const description = req.query.description; 
+        const priceType = req.query.priceType; 
+        const viewPriceType = req.query.viewPriceType; 
+        const staatues = req.query.staatues; 
+        const orderCounter = req.query.orderCounter; 
+        const catID = req.query.catID; 
+        const tagID = req.query.tagID; 
+        const slugID = req.query.slugID; 
+        const productID = req.query.productID
         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
@@ -100,8 +117,12 @@ class StoreController {
                 // create Request object
                 var request = new sql.Request();
                 
-                const qr = 'update store set address = N\'' + address + '\' ,stroreName = N\'' + stroreName + '\' ,ownerName =  N\'' + ownerName + '\',ownerSurname = N\'' + ownerSurname + '\',logo = N\'' + logo + '\' where storeID = \'' + storeID + '\'';
-                console.log(qr);2
+                const qr = 'update products set storeID = N\'' + storeID + '\' , publishDate = N\'' + publishDate + '\' , storeDescription = N\'' + storeDescription +
+                '\' , description = N\'' + description +'\' , priceType = N\'' + priceType +'\' , viewPriceType = N\'' + viewPriceType +
+                '\' , staatues = N\'' + staatues +'\' , orderCounter = N\'' + orderCounter +'\' , catID = N\'' + catID +
+                '\' , tagID = N\'' + tagID +'\' , slugID = N\'' + slugID + 
+                    '\' WHERE productID ='+ productID;
+               
                 // query to the database and get the records
                 request.query(qr, function (err) {
                     if (err) {
@@ -110,7 +131,7 @@ class StoreController {
 
                     else {
                        
-                        res.send("the store added %s successfully");
+                        res.send("the category updated successfully");
                     }
                 });
             });
@@ -133,7 +154,7 @@ class StoreController {
                 // create Request object
                 var request = new sql.Request();
                 
-                const qr = "select *  from store";
+                const qr = "select *  from products";
            
                 // query to the database and get the records
                 request.query(qr, function (err , recordset) {
@@ -155,4 +176,4 @@ class StoreController {
     }
 }
 
-module.exports = new StoreController();
+module.exports = new ProductsController();

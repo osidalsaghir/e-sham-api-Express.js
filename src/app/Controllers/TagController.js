@@ -11,15 +11,12 @@ const sqlConfig = {
     port: 1433
 }
 
-class StoreController {
+class TagController {
 
     
     add = async (req, res) => {
-        const address = req.query.address;
-        const stroreName = req.query.stroreName;
-        const ownerName = req.query.ownerName;
-        const ownerSurname = req.query.ownerSurname;
-        const logo = req.query.logo;
+        const name = req.query.Name;
+        const catID = req.query.CatID;
         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
@@ -30,8 +27,8 @@ class StoreController {
                 // create Request object
                 var request = new sql.Request();
                 
-                const qr = 'INSERT INTO store (address, stroreName, ownerName ,ownerSurname,logo ) VALUES  (N\'' + address + '\', N\'' + stroreName + '\', N\'' + ownerName + '\', N\'' + ownerSurname + '\',N\'' + logo + '\')';
-                console.log(qr);2
+                const qr = 'INSERT INTO tag (name , catID) VALUES  (N\'' + name + '\' ,N\'' + catID + '\')';
+         
                 // query to the database and get the records
                 request.query(qr, function (err) {
                     if (err) {
@@ -40,7 +37,7 @@ class StoreController {
 
                     else {
                        
-                        res.send("the store added %s successfully");
+                        res.send("the category add successfully");
                     }
                 });
             });
@@ -52,7 +49,7 @@ class StoreController {
     }
 
     delete = async (req, res) => {
-        const storeID = req.query.StoreID
+        const tagID = req.query.TagID
         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
@@ -63,7 +60,7 @@ class StoreController {
                 // create Request object
                 var request = new sql.Request();
                 
-                const qr = "DELETE FROM store WHERE storeID = "+ storeID;
+                const qr = "DELETE FROM tag WHERE tagID = "+ tagID;
                 console.log(qr);2
                 // query to the database and get the records
                 request.query(qr, function (err) {
@@ -84,12 +81,9 @@ class StoreController {
 
     }
     update = async (req, res) => {
-        const address = req.query.address;
-        const stroreName = req.query.stroreName;
-        const ownerName = req.query.ownerName;
-        const ownerSurname = req.query.ownerSurname;
-        const logo = req.query.logo;
-        const storeID = req.query.StoreID;
+        const name = req.query.Name; 
+        const catID = req.query.CatID; 
+        const tagID = req.query.TagID; 
         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
@@ -100,7 +94,7 @@ class StoreController {
                 // create Request object
                 var request = new sql.Request();
                 
-                const qr = 'update store set address = N\'' + address + '\' ,stroreName = N\'' + stroreName + '\' ,ownerName =  N\'' + ownerName + '\',ownerSurname = N\'' + ownerSurname + '\',logo = N\'' + logo + '\' where storeID = \'' + storeID + '\'';
+                const qr = 'update tag set name = N\'' + name + '\' , catID = N\'' + catID + '\' WHERE tagID ='+ tagID;
                 console.log(qr);2
                 // query to the database and get the records
                 request.query(qr, function (err) {
@@ -110,7 +104,7 @@ class StoreController {
 
                     else {
                        
-                        res.send("the store added %s successfully");
+                        res.send("the category updated successfully");
                     }
                 });
             });
@@ -133,7 +127,7 @@ class StoreController {
                 // create Request object
                 var request = new sql.Request();
                 
-                const qr = "select *  from store";
+                const qr = "select *  from tag";
            
                 // query to the database and get the records
                 request.query(qr, function (err , recordset) {
@@ -155,4 +149,4 @@ class StoreController {
     }
 }
 
-module.exports = new StoreController();
+module.exports = new TagController();
