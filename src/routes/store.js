@@ -1,6 +1,8 @@
+const BenefitesController = require('../app/Controllers/BenefitesController');
 const categoryController = require('../app/Controllers/categoryController');
 const ProductsController = require('../app/Controllers/ProductsController');
 const SlugController = require('../app/Controllers/SlugController');
+const SotreCategoryController = require('../app/Controllers/SotreCategoryController');
 const StoreController = require('../app/Controllers/StoreController');
 const StoreManagerController = require('../app/Controllers/StoreManagerController');
 const TagController = require('../app/Controllers/TagController');
@@ -45,5 +47,20 @@ module.exports = (src) => {
   src.post("/products/delete", ProductsController.delete);
   src.post("/products/update", ProductsController.update);
   src.post("/products/read", ProductsController.read);
+
+
+  // store category controller operations 
+  src.post("/store/category/add", SotreCategoryController.add);
+  src.post("/store/category/update",SotreCategoryController.update);
+  src.post("/store/category/read",SotreCategoryController.read);
+  src.post("/store/category/delete",SotreCategoryController.delete);
+
+  // store Benefites controller operations 
+  src.post("/store/benefites/add", BenefitesController.add);
+  src.post("/store/benefites/update",BenefitesController.update);
+  src.post("/store/benefites/read",BenefitesController.read);
+  src.post("/store/benefites/delete",BenefitesController.delete);
+
+  
   };
 

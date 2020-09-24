@@ -15,8 +15,11 @@ class SlugController {
 
     
     add = async (req, res) => {
-        const name = req.query.Name; //catID tagID
-        const tagID = req.query.TagID; 
+        const satrtdate = req.query.satrtdate; 
+        const enddate = req.query.enddate; 
+        const percentage = req.query.percentage; 
+        const storeID = req.query.storeID; 
+
         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
@@ -27,7 +30,8 @@ class SlugController {
                 // create Request object
                 var request = new sql.Request();
                 
-                const qr = 'INSERT INTO slug (name , tagID) VALUES  (N\'' + name + '\' ,N\'' + tagID + '\')';
+                const qr = 'INSERT INTO benefites (satrtdate , enddate ,percentage,storeID) '+
+                'VALUES  (N\'' + satrtdate + '\' ,N\'' + enddate + '\',N\'' + percentage + '\' ,N\'' + storeID + '\' )';
          
                 // query to the database and get the records
                 request.query(qr, function (err) {
@@ -37,7 +41,7 @@ class SlugController {
 
                     else {
                        
-                        res.send("the category add successfully");
+                        res.send("the benefites add successfully");
                     }
                 });
             });
@@ -49,7 +53,7 @@ class SlugController {
     }
 
     delete = async (req, res) => {
-        const slugID = req.query.SlugID
+        const benefiteID = req.query.benefiteID
         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
@@ -60,7 +64,7 @@ class SlugController {
                 // create Request object
                 var request = new sql.Request();
                 
-                const qr = "DELETE FROM slug WHERE slugID = "+ slugID;
+                const qr = "DELETE FROM benefites WHERE benefiteID = "+ benefiteID;
                 
                 // query to the database and get the records
                 request.query(qr, function (err) {
@@ -70,7 +74,7 @@ class SlugController {
 
                     else {
                        
-                        res.send("the store deleted");
+                        res.send("the benefites deleted");
                     }
                 });
             });
@@ -81,9 +85,11 @@ class SlugController {
 
     }
     update = async (req, res) => {
-        const name = req.query.Name; 
-        const slugID = req.query.SlugID; 
-        const tagID = req.query.TagID; 
+        const satrtdate = req.query.satrtdate; 
+        const enddate = req.query.enddate; 
+        const percentage = req.query.percentage; 
+        const storeID = req.query.storeID; 
+        const benefiteID = req.query.benefiteID
         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
@@ -94,8 +100,8 @@ class SlugController {
                 // create Request object
                 var request = new sql.Request();
                 
-                const qr = 'update slug set name = N\'' + name + '\' , tagID = N\'' + tagID + '\' WHERE slugID ='+ slugID;
-                console.log(qr);2
+                const qr = 'update benefites set satrtdate = N\'' + satrtdate + '\' , enddate = N\'' + enddate + '\',percentage = N\'' + percentage + '\' ,storeID = N\'' + storeID + '\'  WHERE benefiteID ='+ benefiteID;
+               
                 // query to the database and get the records
                 request.query(qr, function (err) {
                     if (err) {
@@ -104,7 +110,7 @@ class SlugController {
 
                     else {
                        
-                        res.send("the category updated successfully");
+                        res.send("the benefites updated successfully");
                     }
                 });
             });
@@ -127,7 +133,7 @@ class SlugController {
                 // create Request object
                 var request = new sql.Request();
                 
-                const qr = "select *  from slug";
+                const qr = "select *  from benefites";
            
                 // query to the database and get the records
                 request.query(qr, function (err , recordset) {

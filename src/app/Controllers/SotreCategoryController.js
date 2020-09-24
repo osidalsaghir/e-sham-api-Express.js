@@ -11,12 +11,12 @@ const sqlConfig = {
     port: 1433
 }
 
-class SlugController {
+class SotreCategoryController {
 
     
     add = async (req, res) => {
-        const name = req.query.Name; //catID tagID
-        const tagID = req.query.TagID; 
+        const storeID = req.query.storeID; //catID tagID
+        const name = req.query.name; 
         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
@@ -27,7 +27,7 @@ class SlugController {
                 // create Request object
                 var request = new sql.Request();
                 
-                const qr = 'INSERT INTO slug (name , tagID) VALUES  (N\'' + name + '\' ,N\'' + tagID + '\')';
+                const qr = 'INSERT INTO sotreCategory (name , storeID) VALUES  (N\'' + name + '\' ,N\'' + storeID + '\')';
          
                 // query to the database and get the records
                 request.query(qr, function (err) {
@@ -37,7 +37,7 @@ class SlugController {
 
                     else {
                        
-                        res.send("the category add successfully");
+                        res.send("the sotreCategory add successfully");
                     }
                 });
             });
@@ -49,7 +49,8 @@ class SlugController {
     }
 
     delete = async (req, res) => {
-        const slugID = req.query.SlugID
+        const scID = req.query.scID; //catID tagID
+       
         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
@@ -60,7 +61,7 @@ class SlugController {
                 // create Request object
                 var request = new sql.Request();
                 
-                const qr = "DELETE FROM slug WHERE slugID = "+ slugID;
+                const qr = "DELETE FROM sotreCategory WHERE scID = "+ scID;
                 
                 // query to the database and get the records
                 request.query(qr, function (err) {
@@ -70,7 +71,7 @@ class SlugController {
 
                     else {
                        
-                        res.send("the store deleted");
+                        res.send("the sotreCategory deleted");
                     }
                 });
             });
@@ -81,9 +82,9 @@ class SlugController {
 
     }
     update = async (req, res) => {
-        const name = req.query.Name; 
-        const slugID = req.query.SlugID; 
-        const tagID = req.query.TagID; 
+        const storeID = req.query.storeID;
+        const scID = req.query.scID; 
+        const name = req.query.name; 
         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
@@ -94,7 +95,7 @@ class SlugController {
                 // create Request object
                 var request = new sql.Request();
                 
-                const qr = 'update slug set name = N\'' + name + '\' , tagID = N\'' + tagID + '\' WHERE slugID ='+ slugID;
+                const qr = 'update sotreCategory set name = N\'' + name + '\' , storeID = N\'' + storeID + '\' WHERE scID ='+ scID;
                 console.log(qr);2
                 // query to the database and get the records
                 request.query(qr, function (err) {
@@ -104,7 +105,7 @@ class SlugController {
 
                     else {
                        
-                        res.send("the category updated successfully");
+                        res.send("the sotreCategory updated successfully");
                     }
                 });
             });
@@ -127,7 +128,7 @@ class SlugController {
                 // create Request object
                 var request = new sql.Request();
                 
-                const qr = "select *  from slug";
+                const qr = "select *  from sotreCategory";
            
                 // query to the database and get the records
                 request.query(qr, function (err , recordset) {
@@ -149,4 +150,4 @@ class SlugController {
     }
 }
 
-module.exports = new SlugController();
+module.exports = new SotreCategoryController();

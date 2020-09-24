@@ -1,4 +1,4 @@
-const CountryContraller = require('../app/Controllers/countryController');
+const CountryContraller = require('../app/Controllers/CountryController');
 
 
 module.exports = (src) => {
