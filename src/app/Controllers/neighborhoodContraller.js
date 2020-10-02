@@ -13,17 +13,13 @@ const sqlConfig = {
 
 
 
-class CountryContraller {
+class NighborhoodContraller {
 
 
     insert = async (req, res) => {
         const name = req.query.Name;
-        const startdate = new Date().toISOString().slice(0, 10);
-        const phonecode = req.query.Phonecode;
-        const countrycode = req.query.Countrycode;
-        const cashtype = req.query.Cashtype;
-        const apikey = req.query.ApiKey;
-
+        const cityID=req.query.CityID;
+        const apikey =req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
 
@@ -33,7 +29,7 @@ class CountryContraller {
                 // create Request object
                 var request = new sql.Request();
 
-                const qr = 'INSERT INTO countries (name,countryCode,phoneCode,startDate,cashType) values(N\'' + name + '\',N\'' + countrycode + '\',' + phonecode + ',\'' + startdate + '\',\'' + cashtype + '\')';
+                const qr = 'INSERT INTO neighborhood (name,cityID) values(N\'' + name + '\',N\'' + cityID + '\')';
                 console.log(qr);
                 // query to the database and get the records
                 request.query(qr, function (err, recordset) {
@@ -42,7 +38,7 @@ class CountryContraller {
                     }
 
                     else {
-                        res.send('City added sucsessfully...');
+                        res.send('neighborhood added sucsessfully...');
                     }
                 });
             });
@@ -55,10 +51,7 @@ class CountryContraller {
 
     update = async (req, res) => {
         const name = req.query.Name;
-        const startdate = new Date().toISOString().slice(0, 10);
-        const phonecode = req.query.Phonecode;
-        const countrycode = req.query.Countrycode;
-        const cashtype = req.query.Cashtype;
+        const cityID=req.query.CityID;
         const apikey = req.query.ApiKey;
 
         if (apikey === process.env.APIKEY) {
@@ -70,7 +63,7 @@ class CountryContraller {
                 // create Request object
                 var request = new sql.Request();
 
-                const qr = 'UPDATE countries SET name=N\'' + name + '\',countryCode= N\'' + countrycode + '\',startDate= N\'' + startdate + '\',cashType= N\'' + cashtype + '\',phoneCode= N\'' + phonecode + '\' where countryID=4';
+                const qr = 'UPDATE neighborhood SET name=N\'' + name + '\' where cityID= N\'' + cityID + '\'';
                 console.log(qr);
                 // query to the database and get the records
                 request.query(qr, function (err, recordset) {
@@ -79,7 +72,7 @@ class CountryContraller {
                     }
 
                     else {
-                        res.send('City updated sucsessfully...');
+                        res.send('neighborhood updated sucsessfully...');
                     }
                 });
             });
@@ -91,7 +84,7 @@ class CountryContraller {
     }
 
     delete = async (req, res) => {
-        const countryID = req.query.CountryID;
+        const neighborhoodID = req.query.NeighborhoodID;
         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
@@ -102,7 +95,7 @@ class CountryContraller {
                 // create Request object
                 var request = new sql.Request();
 
-                const qr = "DELETE FROM store WHERE storeID = " + countryID;
+                const qr = "DELETE FROM neighborhood WHERE neighborhoodID = " + neighborhoodID;
                 console.log(qr); 2
                 // query to the database and get the records
                 request.query(qr, function (err) {
@@ -112,7 +105,7 @@ class CountryContraller {
 
                     else {
 
-                        res.send("the country deleted");
+                        res.send("the neighborhood deleted");
                     }
                 });
             });
@@ -122,13 +115,10 @@ class CountryContraller {
         }
     }
     read = async (req, res) => {
-        const name = req.query.Name;
-        const startdate = new Date().toISOString().slice(0, 10);
-        const phonecode = req.query.Phonecode;
-        const countrycode = req.query.Countrycode;
-        const cashtype = req.query.Cashtype;
+      
         const apikey = req.query.ApiKey;
-
+        
+        
         if (apikey === process.env.APIKEY) {
 
 
@@ -138,7 +128,7 @@ class CountryContraller {
                 // create Request object
                 var request = new sql.Request();
 
-                const qr = 'SELECT* FROM countries GO';
+                const qr = 'SELECT* FROM neighborhood GO';
 
 
                 // query to the database and get the records
@@ -161,4 +151,4 @@ class CountryContraller {
 }
 
 
-module.exports = new CountryContraller();
+module.exports = new NighborhoodContraller();

@@ -4,6 +4,7 @@ const SlugController = require('../app/Controllers/SlugController');
 const StoreController = require('../app/Controllers/StoreController');
 const StoreManagerController = require('../app/Controllers/StoreManagerController');
 const TagController = require('../app/Controllers/TagController');
+const CopunContraller = require('../app/Controllers/cuponContraller');
 
 
 module.exports = (src) => {
@@ -45,5 +46,12 @@ module.exports = (src) => {
   src.post("/products/delete", ProductsController.delete);
   src.post("/products/update", ProductsController.update);
   src.post("/products/read", ProductsController.read);
+
+  //add copuns
+  src.post("/Copun/add", CopunContraller.insert);
+  src.post("/Copun/update", CopunContraller.delete);
+  src.post("/Copun/delete", CopunContraller.update);
+  src.post("/Copun/read", CopunContraller.read);
+  
   };
 

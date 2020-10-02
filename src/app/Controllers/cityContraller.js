@@ -13,17 +13,15 @@ const sqlConfig = {
 
 
 
-class CountryContraller {
+class CityCOntraller {
 
 
     insert = async (req, res) => {
         const name = req.query.Name;
         const startdate = new Date().toISOString().slice(0, 10);
-        const phonecode = req.query.Phonecode;
-        const countrycode = req.query.Countrycode;
-        const cashtype = req.query.Cashtype;
+        const status = req.query.Status;
         const apikey = req.query.ApiKey;
-
+         const countryID=req.query.CountryID;
         if (apikey === process.env.APIKEY) {
 
 
@@ -33,7 +31,7 @@ class CountryContraller {
                 // create Request object
                 var request = new sql.Request();
 
-                const qr = 'INSERT INTO countries (name,countryCode,phoneCode,startDate,cashType) values(N\'' + name + '\',N\'' + countrycode + '\',' + phonecode + ',\'' + startdate + '\',\'' + cashtype + '\')';
+                const qr = 'INSERT INTO cities (name,startdate,status,countryID) values(N\'' + name + '\',N\'' + startdate + '\',' + status + ',\'' + countryID+ '\)';
                 console.log(qr);
                 // query to the database and get the records
                 request.query(qr, function (err, recordset) {
@@ -56,10 +54,10 @@ class CountryContraller {
     update = async (req, res) => {
         const name = req.query.Name;
         const startdate = new Date().toISOString().slice(0, 10);
-        const phonecode = req.query.Phonecode;
-        const countrycode = req.query.Countrycode;
-        const cashtype = req.query.Cashtype;
+        const status = req.query.Status;
         const apikey = req.query.ApiKey;
+         const countryID=req.query.CountryID;
+        
 
         if (apikey === process.env.APIKEY) {
 
@@ -70,7 +68,7 @@ class CountryContraller {
                 // create Request object
                 var request = new sql.Request();
 
-                const qr = 'UPDATE countries SET name=N\'' + name + '\',countryCode= N\'' + countrycode + '\',startDate= N\'' + startdate + '\',cashType= N\'' + cashtype + '\',phoneCode= N\'' + phonecode + '\' where countryID=4';
+                const qr = 'UPDATE cities SET name=N\'' + name + '\',startdate= N\'' + startdate + '\',statues= N\'' + status + '\',countryID= N\'' + countryID + '\' where countryID=4';
                 console.log(qr);
                 // query to the database and get the records
                 request.query(qr, function (err, recordset) {
@@ -91,7 +89,7 @@ class CountryContraller {
     }
 
     delete = async (req, res) => {
-        const countryID = req.query.CountryID;
+        const cityID = req.query.CityID;
         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
@@ -102,7 +100,7 @@ class CountryContraller {
                 // create Request object
                 var request = new sql.Request();
 
-                const qr = "DELETE FROM store WHERE storeID = " + countryID;
+                const qr = "DELETE FROM cities WHERE cityID = " +cityID ;
                 console.log(qr); 2
                 // query to the database and get the records
                 request.query(qr, function (err) {
@@ -112,7 +110,7 @@ class CountryContraller {
 
                     else {
 
-                        res.send("the country deleted");
+                        res.send("the city deleted");
                     }
                 });
             });
@@ -122,13 +120,10 @@ class CountryContraller {
         }
     }
     read = async (req, res) => {
-        const name = req.query.Name;
-        const startdate = new Date().toISOString().slice(0, 10);
-        const phonecode = req.query.Phonecode;
-        const countrycode = req.query.Countrycode;
-        const cashtype = req.query.Cashtype;
+      
         const apikey = req.query.ApiKey;
-
+        
+        
         if (apikey === process.env.APIKEY) {
 
 
@@ -138,7 +133,7 @@ class CountryContraller {
                 // create Request object
                 var request = new sql.Request();
 
-                const qr = 'SELECT* FROM countries GO';
+                const qr = 'SELECT* FROM cities GO';
 
 
                 // query to the database and get the records
@@ -161,4 +156,4 @@ class CountryContraller {
 }
 
 
-module.exports = new CountryContraller();
+module.exports = new CityCOntraller();

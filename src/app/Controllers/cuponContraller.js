@@ -13,17 +13,17 @@ const sqlConfig = {
 
 
 
-class CountryContraller {
+class CopunContraller {
 
 
     insert = async (req, res) => {
         const name = req.query.Name;
         const startdate = new Date().toISOString().slice(0, 10);
-        const phonecode = req.query.Phonecode;
-        const countrycode = req.query.Countrycode;
-        const cashtype = req.query.Cashtype;
-        const apikey = req.query.ApiKey;
+        const enddate = req.query.Status;
+         const copunStatus=req.query.CopunStausID;
+         const storeID =req.query.StoreID;
 
+         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
 
@@ -33,7 +33,7 @@ class CountryContraller {
                 // create Request object
                 var request = new sql.Request();
 
-                const qr = 'INSERT INTO countries (name,countryCode,phoneCode,startDate,cashType) values(N\'' + name + '\',N\'' + countrycode + '\',' + phonecode + ',\'' + startdate + '\',\'' + cashtype + '\')';
+                const qr = 'INSERT INTO copuns (name,startdate,enddate,storeID,copunStatus) values(N\'' + name + '\',N\'' + startdate + '\',' + enddate + ',\'' + storeID+ '\,\'' + copunStatus+ '\)';
                 console.log(qr);
                 // query to the database and get the records
                 request.query(qr, function (err, recordset) {
@@ -42,7 +42,7 @@ class CountryContraller {
                     }
 
                     else {
-                        res.send('City added sucsessfully...');
+                        res.send('Copun added sucsessfully...');
                     }
                 });
             });
@@ -55,10 +55,9 @@ class CountryContraller {
 
     update = async (req, res) => {
         const name = req.query.Name;
-        const startdate = new Date().toISOString().slice(0, 10);
-        const phonecode = req.query.Phonecode;
-        const countrycode = req.query.Countrycode;
-        const cashtype = req.query.Cashtype;
+        const enddate = req.query.Status;
+         const copunStatus=req.query.CopunStausID;
+         const storeID =req.query.StoreID;
         const apikey = req.query.ApiKey;
 
         if (apikey === process.env.APIKEY) {
@@ -70,7 +69,7 @@ class CountryContraller {
                 // create Request object
                 var request = new sql.Request();
 
-                const qr = 'UPDATE countries SET name=N\'' + name + '\',countryCode= N\'' + countrycode + '\',startDate= N\'' + startdate + '\',cashType= N\'' + cashtype + '\',phoneCode= N\'' + phonecode + '\' where countryID=4';
+                const qr = 'UPDATE copuns SET name=N\'' + name + '\',statues= N\'' + copunStatus + '\' where storeID= N\'' + storeID + '\'';
                 console.log(qr);
                 // query to the database and get the records
                 request.query(qr, function (err, recordset) {
@@ -79,7 +78,7 @@ class CountryContraller {
                     }
 
                     else {
-                        res.send('City updated sucsessfully...');
+                        res.send('copun updated sucsessfully...');
                     }
                 });
             });
@@ -91,7 +90,7 @@ class CountryContraller {
     }
 
     delete = async (req, res) => {
-        const countryID = req.query.CountryID;
+        const copunID = req.query.CopunID;
         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
@@ -102,7 +101,7 @@ class CountryContraller {
                 // create Request object
                 var request = new sql.Request();
 
-                const qr = "DELETE FROM store WHERE storeID = " + countryID;
+                const qr = "DELETE FROM copuns WHERE copunID = " +copunID ;
                 console.log(qr); 2
                 // query to the database and get the records
                 request.query(qr, function (err) {
@@ -112,7 +111,7 @@ class CountryContraller {
 
                     else {
 
-                        res.send("the country deleted");
+                        res.send("the copun deleted");
                     }
                 });
             });
@@ -122,13 +121,10 @@ class CountryContraller {
         }
     }
     read = async (req, res) => {
-        const name = req.query.Name;
-        const startdate = new Date().toISOString().slice(0, 10);
-        const phonecode = req.query.Phonecode;
-        const countrycode = req.query.Countrycode;
-        const cashtype = req.query.Cashtype;
+      
         const apikey = req.query.ApiKey;
-
+        
+        
         if (apikey === process.env.APIKEY) {
 
 
@@ -138,7 +134,7 @@ class CountryContraller {
                 // create Request object
                 var request = new sql.Request();
 
-                const qr = 'SELECT* FROM countries GO';
+                const qr = 'SELECT* FROM copuns GO';
 
 
                 // query to the database and get the records
@@ -161,4 +157,4 @@ class CountryContraller {
 }
 
 
-module.exports = new CountryContraller();
+module.exports = new CopunContraller();
