@@ -11,12 +11,13 @@ const sqlConfig = {
     port: 1433
 }
 
-class SlugController {
+class HolidayController {
 
     
     add = async (req, res) => {
-        const name = req.query.Name; //catID tagID
-        const tagID = req.query.TagID; 
+        const name = req.query.name;
+        const description = req.query.description; 
+        const pid = req.query.pid; 
         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
@@ -27,7 +28,7 @@ class SlugController {
                 // create Request object
                 var request = new sql.Request();
                 
-                const qr = 'INSERT INTO slug (name , tagID) VALUES  (N\'' + name + '\' ,N\'' + tagID + '\')';
+                const qr = 'INSERT INTO holiday (name , description , PID) VALUES  (N\'' + name + '\' ,N\'' + description + '\',N\'' + pid + '\')';
          
                 // query to the database and get the records
                 request.query(qr, function (err) {
@@ -37,7 +38,7 @@ class SlugController {
 
                     else {
                        
-                        res.send("the category add successfully");
+                        res.send("the holiday add successfully");
                     }
                 });
             });
@@ -49,7 +50,7 @@ class SlugController {
     }
 
     delete = async (req, res) => {
-        const slugID = req.query.SlugID
+        const hid = req.query.hid
         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
@@ -60,7 +61,7 @@ class SlugController {
                 // create Request object
                 var request = new sql.Request();
                 
-                const qr = "DELETE FROM slug WHERE slugID = "+ slugID;
+                const qr = "DELETE FROM holiday WHERE HID = "+ hid;
                 
                 // query to the database and get the records
                 request.query(qr, function (err) {
@@ -70,7 +71,7 @@ class SlugController {
 
                     else {
                        
-                        res.send("the store deleted");
+                        res.send("the holiday deleted");
                     }
                 });
             });
@@ -81,9 +82,10 @@ class SlugController {
 
     }
     update = async (req, res) => {
-        const name = req.query.Name; 
-        const slugID = req.query.SlugID; 
-        const tagID = req.query.TagID; 
+        const name = req.query.name;
+        const description = req.query.description; 
+        const pid = req.query.pid; 
+        const hid = req.query.hid
         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
@@ -94,7 +96,7 @@ class SlugController {
                 // create Request object
                 var request = new sql.Request();
                 
-                const qr = 'update slug set name = N\'' + name + '\' , tagID = N\'' + tagID + '\' WHERE slugID ='+ slugID;
+                const qr = 'update holiday set name = N\'' + name + '\' , description = N\'' + description + '\', PID = N\'' + pid + '\' WHERE HID ='+ hid;
                 console.log(qr);2
                 // query to the database and get the records
                 request.query(qr, function (err) {
@@ -104,7 +106,7 @@ class SlugController {
 
                     else {
                        
-                        res.send("the category updated successfully");
+                        res.send("the holiday updated successfully");
                     }
                 });
             });
@@ -127,7 +129,7 @@ class SlugController {
                 // create Request object
                 var request = new sql.Request();
                 
-                const qr = "select *  from slug";
+                const qr = "select *  from holiday";
            
                 // query to the database and get the records
                 request.query(qr, function (err , recordset) {
@@ -149,4 +151,4 @@ class SlugController {
     }
 }
 
-module.exports = new SlugController();
+module.exports = new HolidayController();
