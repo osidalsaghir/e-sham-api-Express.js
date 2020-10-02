@@ -4,26 +4,20 @@ require('dotenv').config();
 
 
 const sqlConfig = {
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    server: "DESKTOP-7991DKN",
+    user: "wwe",
+    password: "wwe",
+    server: "OS",
     database: "E-shamDB",
-
+    port: 1433
 }
 
+class SizeController {
 
-
-class CountryContraller {
-
-
-    insert = async (req, res) => {
-        const name = req.query.Name;
-        const startdate = new Date().toISOString().slice(0, 10);
-        const phonecode = req.query.Phonecode;
-        const countrycode = req.query.Countrycode;
-        const cashtype = req.query.Cashtype;
+    
+    add = async (req, res) => {
+        const size = req.query.size;
+        const sizeType = req.query.sizeType;
         const apikey = req.query.ApiKey;
-
         if (apikey === process.env.APIKEY) {
 
 
@@ -32,54 +26,18 @@ class CountryContraller {
                 if (err) res.send(err);
                 // create Request object
                 var request = new sql.Request();
-
-                const qr = 'INSERT INTO countries (name,countryCode,phoneCode,startDate,cashType) values(N\'' + name + '\',N\'' + countrycode + '\',' + phonecode + ',\'' + startdate + '\',\'' + cashtype + '\')';
-                console.log(qr);
+                
+                const qr = 'INSERT INTO size (size ,sizeType ) VALUES  (N\'' + size + 'N\'' + sizeType + '\')';
+         
                 // query to the database and get the records
-                request.query(qr, function (err, recordset) {
+                request.query(qr, function (err) {
                     if (err) {
                         res.send(err);
                     }
 
                     else {
-                        res.send('City added sucsessfully...');
-                    }
-                });
-            });
-        }
-        else {
-            res.send("Invalid Key");
-        }
-
-    }
-
-    update = async (req, res) => {
-        const name = req.query.Name;
-        const startdate = new Date().toISOString().slice(0, 10);
-        const phonecode = req.query.Phonecode;
-        const countrycode = req.query.Countrycode;
-        const cashtype = req.query.Cashtype;
-        const apikey = req.query.ApiKey;
-
-        if (apikey === process.env.APIKEY) {
-
-
-            sql.connect(sqlConfig, function (err) {
-
-                if (err) res.send(err);
-                // create Request object
-                var request = new sql.Request();
-
-                const qr = 'UPDATE countries SET name=N\'' + name + '\',countryCode= N\'' + countrycode + '\',startDate= N\'' + startdate + '\',cashType= N\'' + cashtype + '\',phoneCode= N\'' + phonecode + '\' where countryID=4';
-                console.log(qr);
-                // query to the database and get the records
-                request.query(qr, function (err, recordset) {
-                    if (err) {
-                        res.send(err);
-                    }
-
-                    else {
-                        res.send('City updated sucsessfully...');
+                       
+                        res.send("the size add successfully");
                     }
                 });
             });
@@ -91,7 +49,7 @@ class CountryContraller {
     }
 
     delete = async (req, res) => {
-        const countryID = req.query.CountryID;
+        const sizeID = req.query.sizeID
         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
@@ -101,9 +59,9 @@ class CountryContraller {
                 if (err) res.send(err);
                 // create Request object
                 var request = new sql.Request();
-
-                const qr = "DELETE FROM store WHERE storeID = " + countryID;
-                console.log(qr); 2
+                
+                const qr = "DELETE FROM size WHERE sizeID = "+ sizeID;
+                console.log(qr);
                 // query to the database and get the records
                 request.query(qr, function (err) {
                     if (err) {
@@ -111,8 +69,8 @@ class CountryContraller {
                     }
 
                     else {
-
-                        res.send("the country deleted");
+                       
+                        res.send("the size deleted");
                     }
                 });
             });
@@ -120,15 +78,14 @@ class CountryContraller {
         else {
             res.send("Invalid Key");
         }
-    }
-    read = async (req, res) => {
-        const name = req.query.Name;
-        const startdate = new Date().toISOString().slice(0, 10);
-        const phonecode = req.query.Phonecode;
-        const countrycode = req.query.Countrycode;
-        const cashtype = req.query.Cashtype;
-        const apikey = req.query.ApiKey;
 
+    }
+    update = async (req, res) => {
+        const sizeID = req.query.sizeID
+        const size = req.query.size;
+        const sizeType = req.query.sizeType;
+
+        const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
 
@@ -137,18 +94,51 @@ class CountryContraller {
                 if (err) res.send(err);
                 // create Request object
                 var request = new sql.Request();
-
-                const qr = 'SELECT* FROM countries GO';
-
-
+                
+                const qr = 'update size set size = N\'' + size + ', sizeType = N\'' + sizeType +'\' WHERE sizeID ='+ sizeID;
+                console.log(qr);2
                 // query to the database and get the records
-                request.query(qr, function (err, recordset) {
+                request.query(qr, function (err) {
                     if (err) {
                         res.send(err);
                     }
 
                     else {
-                        res.send(recordset.recordsets);
+                       
+                        res.send("the size size successfully");
+                    }
+                });
+            });
+        }
+        else {
+            res.send("Invalid Key");
+        }
+
+    }
+
+    read = async (req, res) => {
+        
+        const apikey = req.query.ApiKey;
+        if (apikey === process.env.APIKEY) {
+
+
+            sql.connect(sqlConfig, function (err) {
+
+                if (err) res.send(err);
+                // create Request object
+                var request = new sql.Request();
+                
+                const qr = "select *  from size";
+           
+                // query to the database and get the records
+                request.query(qr, function (err , recordset) {
+                    if (err) {
+                        res.send(err);
+                    }
+
+                    else {
+                       
+                        res.send(recordset.recordset);
                     }
                 });
             });
@@ -160,5 +150,4 @@ class CountryContraller {
     }
 }
 
-
-module.exports = new CountryContraller();
+module.exports = new SizeController();

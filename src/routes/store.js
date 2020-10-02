@@ -6,6 +6,12 @@ const SotreCategoryController = require('../app/Controllers/SotreCategoryControl
 const StoreController = require('../app/Controllers/StoreController');
 const StoreManagerController = require('../app/Controllers/StoreManagerController');
 const TagController = require('../app/Controllers/TagController');
+const CopunContraller = require('../app/Controllers/cuponContraller');
+const StoreAddressController = require('../app/Controllers/StoreAddressController');
+const ImageController = require('../app/Controllers/ImageController');
+const SizeController = require('../app/Controllers/SizeController');
+const ColorsController = require('../app/Controllers/ColorsController');
+const VariantesController = require('../app/Controllers/VariantesController');
 
 
 module.exports = (src) => {
@@ -48,19 +54,62 @@ module.exports = (src) => {
   src.post("/products/update", ProductsController.update);
   src.post("/products/read", ProductsController.read);
 
+  //add copuns
+  src.post("/Copun/add", CopunContraller.insert);
+  src.post("/Copun/update", CopunContraller.delete);
+  src.post("/Copun/delete", CopunContraller.update);
+  src.post("/Copun/read", CopunContraller.read);
 
-  // store category controller operations 
-  src.post("/store/category/add", SotreCategoryController.add);
-  src.post("/store/category/update",SotreCategoryController.update);
-  src.post("/store/category/read",SotreCategoryController.read);
-  src.post("/store/category/delete",SotreCategoryController.delete);
 
-  // store Benefites controller operations 
-  src.post("/store/benefites/add", BenefitesController.add);
-  src.post("/store/benefites/update",BenefitesController.update);
-  src.post("/store/benefites/read",BenefitesController.read);
-  src.post("/store/benefites/delete",BenefitesController.delete);
+  //address for stores copuns
+  src.post("/storeadress/add", StoreAddressController.add);
+  src.post("/storeadress/update", StoreAddressController.delete);
+  src.post("/storeadress/delete", StoreAddressController.update);
+  src.post("/storeadress/read", StoreAddressController.read);
 
+  //address for stores copuns
+  src.post("/benefites/add", BenefitesController.add);
+  src.post("/benefites/update", BenefitesController.delete);
+  src.post("/benefites/delete", BenefitesController.update);
+  src.post("/benefites/read", BenefitesController.read);
+
+
+  //address for stores 
+  src.post("/sotrecategory/add", SotreCategoryController.add);
+  src.post("/sotrecategory/update", SotreCategoryController.delete);
+  src.post("/sotrecategory/delete", SotreCategoryController.update);
+  src.post("/sotrecategory/read", SotreCategoryController.read);
+
+
+  //product images
+  src.post("/product/image/add", ImageController.add);
+  src.post("/product/image/update", ImageController.delete);
+  src.post("/product/image/delete", ImageController.update);
+  src.post("/product/image/read", ImageController.read);
+
+
+  //products size
+  src.post("/product/size/add", SizeController.add);
+  src.post("/product/size/update", SizeController.delete);
+  src.post("/product/size/delete", SizeController.update);
+  src.post("/product/size/read", SizeController.read);
+
+
+
+  //product color
+  src.post("/product/color/add", ColorsController.add);
+  src.post("/product/color/update", ColorsController.delete);
+  src.post("/product/color/delete", ColorsController.update);
+  src.post("/product/color/read", ColorsController.read);
+
+
+
+
+  //product varients
+  src.post("/product/variantes/add", VariantesController.add);
+  src.post("/product/variantes/update", VariantesController.delete);
+  src.post("/product/variantes/delete", VariantesController.update);
+  src.post("/product/variantes/read", VariantesController.read);
   
   };
 

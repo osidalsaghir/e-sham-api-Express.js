@@ -4,26 +4,26 @@ require('dotenv').config();
 
 
 const sqlConfig = {
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    server: "DESKTOP-7991DKN",
+    user: "wwe",
+    password: "wwe",
+    server: "OS",
     database: "E-shamDB",
-
+    port: 1433
 }
 
+class VariantesController {
 
+    
+    add = async (req, res) => {
+        const productID = req.query.productID; 
+        const sizeID = req.query.sizeID; 
+        const colorrID = req.query.colorrID; 
+        const imageID = req.query.imageID; 
+        const stock = req.query.stock; 
+        const price = req.query.price; 
+        const oldPrice = req.query.oldPrice; 
 
-class CountryContraller {
-
-
-    insert = async (req, res) => {
-        const name = req.query.Name;
-        const startdate = new Date().toISOString().slice(0, 10);
-        const phonecode = req.query.Phonecode;
-        const countrycode = req.query.Countrycode;
-        const cashtype = req.query.Cashtype;
         const apikey = req.query.ApiKey;
-
         if (apikey === process.env.APIKEY) {
 
 
@@ -32,54 +32,19 @@ class CountryContraller {
                 if (err) res.send(err);
                 // create Request object
                 var request = new sql.Request();
-
-                const qr = 'INSERT INTO countries (name,countryCode,phoneCode,startDate,cashType) values(N\'' + name + '\',N\'' + countrycode + '\',' + phonecode + ',\'' + startdate + '\',\'' + cashtype + '\')';
-                console.log(qr);
+                
+                const qr = 'INSERT INTO variantes (productID , sizeID ,colorrID,imageID,stock,price,oldPrice) '+
+                'VALUES  (N\'' + productID + '\' ,N\'' + sizeID + '\',N\'' + colorrID + '\' ,N\'' + imageID + '\' ,N\'' + stock + '\' ,N\'' + price + '\' ,N\'' + oldPrice + '\' )';
+         
                 // query to the database and get the records
-                request.query(qr, function (err, recordset) {
+                request.query(qr, function (err) {
                     if (err) {
                         res.send(err);
                     }
 
                     else {
-                        res.send('City added sucsessfully...');
-                    }
-                });
-            });
-        }
-        else {
-            res.send("Invalid Key");
-        }
-
-    }
-
-    update = async (req, res) => {
-        const name = req.query.Name;
-        const startdate = new Date().toISOString().slice(0, 10);
-        const phonecode = req.query.Phonecode;
-        const countrycode = req.query.Countrycode;
-        const cashtype = req.query.Cashtype;
-        const apikey = req.query.ApiKey;
-
-        if (apikey === process.env.APIKEY) {
-
-
-            sql.connect(sqlConfig, function (err) {
-
-                if (err) res.send(err);
-                // create Request object
-                var request = new sql.Request();
-
-                const qr = 'UPDATE countries SET name=N\'' + name + '\',countryCode= N\'' + countrycode + '\',startDate= N\'' + startdate + '\',cashType= N\'' + cashtype + '\',phoneCode= N\'' + phonecode + '\' where countryID=4';
-                console.log(qr);
-                // query to the database and get the records
-                request.query(qr, function (err, recordset) {
-                    if (err) {
-                        res.send(err);
-                    }
-
-                    else {
-                        res.send('City updated sucsessfully...');
+                       
+                        res.send("the variantes add successfully");
                     }
                 });
             });
@@ -91,7 +56,7 @@ class CountryContraller {
     }
 
     delete = async (req, res) => {
-        const countryID = req.query.CountryID;
+        const vID = req.query.vID; 
         const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
@@ -101,9 +66,9 @@ class CountryContraller {
                 if (err) res.send(err);
                 // create Request object
                 var request = new sql.Request();
-
-                const qr = "DELETE FROM store WHERE storeID = " + countryID;
-                console.log(qr); 2
+                
+                const qr = "DELETE FROM variantes WHERE vID = "+ vID;
+                
                 // query to the database and get the records
                 request.query(qr, function (err) {
                     if (err) {
@@ -111,8 +76,8 @@ class CountryContraller {
                     }
 
                     else {
-
-                        res.send("the country deleted");
+                       
+                        res.send("the variantes deleted");
                     }
                 });
             });
@@ -120,15 +85,18 @@ class CountryContraller {
         else {
             res.send("Invalid Key");
         }
-    }
-    read = async (req, res) => {
-        const name = req.query.Name;
-        const startdate = new Date().toISOString().slice(0, 10);
-        const phonecode = req.query.Phonecode;
-        const countrycode = req.query.Countrycode;
-        const cashtype = req.query.Cashtype;
-        const apikey = req.query.ApiKey;
 
+    }
+    update = async (req, res) => {
+        const vID = req.query.vID; 
+        const productID = req.query.productID; 
+        const sizeID = req.query.sizeID; 
+        const colorrID = req.query.colorrID; 
+        const imageID = req.query.imageID; 
+        const stock = req.query.stock; 
+        const price = req.query.price; 
+        const oldPrice = req.query.oldPrice; 
+        const apikey = req.query.ApiKey;
         if (apikey === process.env.APIKEY) {
 
 
@@ -137,18 +105,52 @@ class CountryContraller {
                 if (err) res.send(err);
                 // create Request object
                 var request = new sql.Request();
-
-                const qr = 'SELECT* FROM countries GO';
-
-
+                
+                const qr = 'update variantes set productID = N\'' + productID + '\' , sizeID = N\'' + sizeID + '\',colorrID = N\'' + colorrID + '\' ,imageID = N\'' + imageID +
+                '\' , stock = N\'' + stock +'\' , price = N\'' + price +'\' , oldPrice = N\'' + oldPrice +'\'  WHERE vID ='+ vID;
+               
                 // query to the database and get the records
-                request.query(qr, function (err, recordset) {
+                request.query(qr, function (err) {
                     if (err) {
                         res.send(err);
                     }
 
                     else {
-                        res.send(recordset.recordsets);
+                       
+                        res.send("the variantes updated successfully");
+                    }
+                });
+            });
+        }
+        else {
+            res.send("Invalid Key");
+        }
+
+    }
+
+    read = async (req, res) => {
+        
+        const apikey = req.query.ApiKey;
+        if (apikey === process.env.APIKEY) {
+
+
+            sql.connect(sqlConfig, function (err) {
+
+                if (err) res.send(err);
+                // create Request object
+                var request = new sql.Request();
+                
+                const qr = "select *  from variantes";
+           
+                // query to the database and get the records
+                request.query(qr, function (err , recordset) {
+                    if (err) {
+                        res.send(err);
+                    }
+
+                    else {
+                       
+                        res.send(recordset.recordset);
                     }
                 });
             });
@@ -160,5 +162,4 @@ class CountryContraller {
     }
 }
 
-
-module.exports = new CountryContraller();
+module.exports = new VariantesController();
